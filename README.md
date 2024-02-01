@@ -32,11 +32,11 @@ lo que facilita la comprensión y el mantenimiento del código.
 ### Instrucciones de Ejecución
 * Clone el repositorio desde GitHub:
 
-```git clone https://github.com/tu_usuario/servidor-peliculas.git```
+```git clone https://github.com/sergiolopezzl/AREP_Taller1.git```
 
 * Navegue al directorio del proyecto: 
 
-```cd servidor-peliculas```
+```cd AREP_Taller1```
 
 * Compile el proyecto y descargue las dependencias con Maven: 
 
@@ -44,7 +44,7 @@ lo que facilita la comprensión y el mantenimiento del código.
 
 * Ejecute el servidor utilizando el siguiente comando: 
 
-```java -cp target/classes edu.escuelaing.arem.ASE.app.HttpServer```
+```mvn exec:java '-Dexec.mainClass=edu.escuelaing.arem.ASE.app.App'```
 
 Una vez que el servidor esté en funcionamiento, acceda a 
 http://localhost:35000/ desde su navegador para comenzar a buscar películas.
