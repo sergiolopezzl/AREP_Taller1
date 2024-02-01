@@ -1,38 +1,50 @@
 package edu.escuelaing.arem.ASE.app;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import com.google.gson.JsonObject;
+import org.junit.Test;
+import java.io.IOException;
+import static org.junit.Assert.*;
 
-/**
- * Unit test for simple App.
+/*
+ * Documentación de la clase AppTest
+ *
+ * La clase AppTest implementa pruebas unitarias para verificar el funcionamiento
+ * correcto de las clases HttpMovie y Cache en la aplicación.
  */
-public class AppTest 
-    extends TestCase
-{
+
+public class AppTest {
     /**
-     * Create the test case
-     *
-     * @param testName name of the test case
+     * Prueba unitaria para verificar la obtención de información de películas.
+     * @throws IOException Si ocurre un error de entrada/salida durante la ejecución de la prueba.
      */
-    public AppTest( String testName )
-    {
-        super( testName );
+    @Test
+    public void testGetMovie() throws IOException {
+        HttpMovie httpMovie = new HttpMovie();
+        JsonObject movieInfo = httpMovie.get("/movie?name=Avengers");
+        assertNotNull(movieInfo);
+        assertEquals("The Avengers", movieInfo.get("Title").getAsString());
     }
 
     /**
-     * @return the suite of tests being tested
+     * Prueba unitaria para verificar la adición y recuperación de información en la caché.
      */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
+    @Test
+    public void testAddAndGet() {
+        Cache cache = Cache.getInstance();
+        JsonObject movieInfo = new JsonObject();
+        movieInfo.addProperty("Title", "The Matrix");
+        cache.add("The Matrix", movieInfo);
+        assertTrue(cache.contains("The Matrix"));
+        JsonObject cachedInfo = cache.get("The Matrix");
+        assertTrue(cachedInfo.has("Title"));
     }
 
     /**
-     * Rigourous Test :-)
+     * Prueba unitaria para verificar la presencia de una película en la caché.
      */
-    public void testApp()
-    {
-        assertTrue( true );
+    @Test
+    public void testContains() {
+        Cache cache = Cache.getInstance();
+        assertFalse(cache.contains("Inception"));
     }
 }
